@@ -18,7 +18,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
     data(){
         return {
@@ -56,9 +56,8 @@ export default {
 }
 </script>
 
-<script setup lang="ts">
-        // const { data } = await useFetch('/api/top')
-        // console.log(data.value["cock"])
+<script setup>
+
 </script>
 
 <style v-if="true">

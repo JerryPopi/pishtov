@@ -1,20 +1,36 @@
 <template>
-	<div class="modal-mask" @click.prevent="this.$emit('closemodal')">
-		<div class="modal-wrapper" @click.stop=";">
-			<div class="modal-container">
+	<div class="modal-mask">
+		<div class="modal-wrapper" @click.prevent="this.$emit('closemodal')">
+			<div class="modal-container" @click.stop>
 				<div class="modal-header">
 					<div class="modal-title-container">
-						<p id="modalTitle">{{ title }} asdasdhahsdhashdhas</p>
+						<p id="modalTitle">{{ title }}asdasdhahsdhashdhas</p>
 					</div>
-					<div class="modal-close-container">
+					<div class="modal-close-container" @click.prevent="this.$emit('closemodal')">
 						<svg id="modalClose" data-src="https://s2.svgbox.net/hero-outline.svg?ic=x"></svg>
 					</div>
 				</div>
-				<div class="modal-content">
-
+				<div class="modal-content-wrapper">
+					<div class="modal-content-container">
+						<MdRender :rawMd="rawMd"/>
+					</div>
 				</div>
 				<div class="modal-footer">
-
+					<div class="modal-timestamp-container">
+						<svg id="footerTimestampSvg" data-src="https://s2.svgbox.net/hero-outline.svg?ic=clock"></svg>
+						<p id="footerTimestamp">18-10-2021</p>
+					</div>
+					<div class="modal-external-container">
+						<nuxt-link class="nuxt-link" :to="'/pishtov/' + id">
+							<div class="modal-openexternal">
+								<p id="openexternalButton">Open external</p>
+							</div>
+						</nuxt-link>
+					</div>
+					<div class="modal-creator-container">
+						<svg id="footerCreatorSvg" data-src="https://s2.svgbox.net/materialui.svg?ic=person"></svg>
+						<p id="footerCreator">joro_napikaniq</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -26,19 +42,37 @@
 		props: {
 			id: Number
 		},
+		data() {
+			return {
+				title: '',
+// 				rawMd: `| Syntax      | Description |
+// | :---------- | ----------- |
+// | Header      | Title       |
+// | Paragraph   | Text        | `
+				rawMd: '# gaming!?!?⁉️⁉️'
+			}
+		},
 		mounted() {
 			this.bgColor = this.color
 			let svgLoader = document.createElement('script')
 			svgLoader.setAttribute('src', 'https://unpkg.com/external-svg-loader@latest/svg-loader.min.js')
 			document.head.appendChild(svgLoader)
-    	},
+		},
+		methods: {
+			printer(i) {
+				console.log(i)
+			},
+		},
 	}	
+
+
 </script>
 
 <script setup>
 	const { data } = await useFetch('/api/pishtov?id=1')
-	console.log(data._value)
+	console.log(data.value)
 </script>
+
 
 <style scoped>
 	.modal-mask {
@@ -63,9 +97,11 @@
 		background-color: #182C3A;
 		width: 60%;
 		height: 80%;
+		min-height: 700px;
 		min-width: 700px;
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
+		justify-content: flex-start;
 	}
 	.modal-header {
 		height: 60px;
@@ -89,6 +125,7 @@
 		margin-top: 10px;
 		display: flex;
 		justify-self: flex-end;
+		cursor: pointer;
 	}
 	#modalTitle {
 		font-family: 'Comfortaa';
@@ -99,7 +136,80 @@
 		color: white;
 		width: 40px;
 		height: 40px;
-		/* display: flex;
-		justify-self: flex-end; */
+	}
+	.modal-content-wrapper {
+		width: 100%;
+		display: flex;
+		justify-content: flex-start;
+	}
+	.modal-content-container {
+		font-family: 'Comfortaa';
+		margin: 0px 20px;
+		color: white;
+	}
+	.modal-footer {
+		margin-top: auto;
+		margin-left: 15px;
+		margin-bottom: 15px;
+		margin-right: 15px;
+		font-family: 'Comfortaa';
+		display: flex;
+	}
+	.modal-timestamp-container {
+		display: flex;
+		align-items: center;
+	}
+	#footerTimestampSvg {
+		color: #00c574;
+		margin-right: 10px;
+		width: 40px;
+		height: 40px;
+	}
+	#footerTimestamp {
+		color: white;
+		margin: 0 0;
+		font-size: 20px;
+	}
+	.modal-external-container {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.nuxt-link {
+		width: 50%;
+		height: 90%;
+		text-decoration: none;
+	}
+	.modal-openexternal {
+		width: 100%;
+		height: 90%;
+		background-color: #00c574;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 30px;
+	}
+	#openexternalButton {
+		color: white;
+		font-size: 20px;
+		margin: 0 0;
+		font-weight: bold;
+	}
+	.modal-creator-container {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+	#footerCreatorSvg {
+		color: #00c574;
+		width: 40px;
+		height: 40px;
+		margin-right: 10px;
+	}
+	#footerCreator {
+		color: white;
+		margin: 0 0;
+		font-size: 20px;
 	}
 </style>

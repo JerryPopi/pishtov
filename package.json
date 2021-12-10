@@ -10,7 +10,12 @@
     "nuxt3": "^3.0.0-27304790.cad09fe"
   },
   "dependencies": {
+    "@kangc/v-md-editor": "^2.3.12",
     "@nuxt/typescript-runtime": "^2.1.0",
-    "tslib": "^2.3.1"
+    "docus": "^2.1.0",
+    "marked": "^4.0.6",
+    "prismjs": "^1.25.0",
+    "tslib": "^2.3.1",
+    "vue": "^3.2.23"
   }
 }
