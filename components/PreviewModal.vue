@@ -4,7 +4,7 @@
 			<div class="modal-container" @click.stop>
 				<div class="modal-header">
 					<div class="modal-title-container">
-						<p id="modalTitle">{{ title }}asdasdhahsdhashdhas</p>
+						<p id="modalTitle">{{ title }}</p>
 					</div>
 					<div class="modal-close-container" @click.prevent="this.$emit('closemodal')">
 						<svg id="modalClose" data-src="https://s2.svgbox.net/hero-outline.svg?ic=x"></svg>
@@ -18,18 +18,19 @@
 				<div class="modal-footer">
 					<div class="modal-timestamp-container">
 						<svg id="footerTimestampSvg" data-src="https://s2.svgbox.net/hero-outline.svg?ic=clock"></svg>
-						<p id="footerTimestamp">18-10-2021</p>
+						<p id="footerTimestamp">{{ date }}</p>
 					</div>
 					<div class="modal-external-container">
-						<nuxt-link class="nuxt-link" :to="'/pishtov/' + id">
+						// TODO - Add external link & Back and Forward buttons
+						<!-- <nuxt-link class="nuxt-link" :to="'/pishtov/' + id">
 							<div class="modal-openexternal">
 								<p id="openexternalButton">Open external</p>
 							</div>
-						</nuxt-link>
+						</nuxt-link> -->
 					</div>
 					<div class="modal-creator-container">
 						<svg id="footerCreatorSvg" data-src="https://s2.svgbox.net/materialui.svg?ic=person"></svg>
-						<p id="footerCreator">joro_napikaniq</p>
+						<p id="footerCreator">{{ creator }}</p>
 					</div>
 				</div>
 			</div>
@@ -42,37 +43,48 @@
 		props: {
 			id: Number
 		},
-		data() {
+		async setup(props) {
+			let title   = '';
+			let img     = '';
+			let creator = '';
+			let date    = '';
+			let stars   = 0;
+			let bgColor = '';
+			let rawMd   = '';
+
+			console.log(props.id)
+			const { data } = await useFetch('/api/pishtov?id=' + props.id)
+			console.log("data: " + JSON.stringify(data.value))
+			title   = data.value["title"]
+			img     = data.value["img"]
+			creator = data.value["creator"]
+			date    = data.value["date"]
+			stars   = data.value["stars"]
+			bgColor = data.value["color"]
+			rawMd   = data.value["md"]
+
 			return {
-				title: '',
-// 				rawMd: `| Syntax      | Description |
-// | :---------- | ----------- |
-// | Header      | Title       |
-// | Paragraph   | Text        | `
-				rawMd: '# gaming!?!?⁉️⁉️'
+				title  : title,
+				img    : img,
+				creator: creator,
+				date   : date,
+				stars  : stars,
+				bgColor: bgColor,
+				rawMd  : rawMd,
 			}
-		},
-		mounted() {
-			this.bgColor = this.color
-			let svgLoader = document.createElement('script')
-			svgLoader.setAttribute('src', 'https://unpkg.com/external-svg-loader@latest/svg-loader.min.js')
-			document.head.appendChild(svgLoader)
 		},
 		methods: {
 			printer(i) {
 				console.log(i)
 			},
 		},
-	}	
-
-
+		mounted() {
+			let svgLoader = document.createElement('script')
+			svgLoader.setAttribute('src', 'https://unpkg.com/external-svg-loader@latest/svg-loader.min.js')
+			document.head.appendChild(svgLoader)
+		},
+	}
 </script>
-
-<script setup>
-	const { data } = await useFetch('/api/pishtov?id=1')
-	console.log(data.value)
-</script>
-
 
 <style scoped>
 	.modal-mask {

@@ -12,10 +12,12 @@
   "dependencies": {
     "@kangc/v-md-editor": "^2.3.12",
     "@nuxt/typescript-runtime": "^2.1.0",
+    "@types/dompurify": "^2.3.3",
     "docus": "^2.1.0",
     "marked": "^4.0.6",
     "prismjs": "^1.25.0",
     "tslib": "^2.3.1",
-    "vue": "^3.2.23"
+    "vue": "^3.2.23",
+    "xss": "^1.0.10"
   }
 }

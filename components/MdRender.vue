@@ -9,7 +9,11 @@
 		},
 		computed: {
 			compiledMd() {
-				return marked(this.rawMd, { sanitize: true })
+				if(this.rawMd == null || this.rawMd == undefined) {
+					return marked("# No such pishtov found!");
+				}
+				let clean = xss(this.rawMd);
+				return marked(clean);
 			}
 		},
 	}
@@ -17,4 +21,5 @@
 
 <script setup>
 	import { marked } from 'marked'
+	import xss from 'xss'
 </script>
