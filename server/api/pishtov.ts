@@ -1,10 +1,10 @@
 import { useQuery } from 'h3';
 import { IncomingMessage, ServerResponse } from 'http';
-import { writeFileSync, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 
 export default (req: IncomingMessage, res: ServerResponse) => {
-	let id = useQuery(req).id.toString();
-	console.log("id: " + id);
+	const id = useQuery(req).id.toString();
+	console.log("id: " + JSON.stringify(id));
 	if (id) {
 		return {
 			id: 1,
@@ -23,9 +23,10 @@ export default (req: IncomingMessage, res: ServerResponse) => {
 
 function getPishtov(id: string) {
 	try {
-		let fileContent = readFileSync('./server/api/pishtovs/' + id + '.md', 'utf8');
+		console.log(id[1])
+		let fileContent =  readFileSync(`server/api/pishtovs/${id}.md`, 'utf8');
 		return fileContent;	
-	} catch(e) {
+	} catch (e) {
 		return;
 	}
 }

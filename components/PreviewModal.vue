@@ -12,7 +12,7 @@
 				</div>
 				<div class="modal-content-wrapper">
 					<div class="modal-content-container">
-						<MdRender :rawMd="rawMd"/>
+						<MdRender :rawMd="rawMd" />
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -38,50 +38,41 @@
 	</div>
 </template>
 
+<script setup>
+	import axios from 'axios'	
+</script>
+
 <script>
 	export default {
 		props: {
 			id: Number
 		},
-		async setup(props) {
-			let title   = '';
-			let img     = '';
-			let creator = '';
-			let date    = '';
-			let stars   = 0;
-			let bgColor = '';
-			let rawMd   = '';
-
-			console.log(props.id)
-			const { data } = await useFetch('/api/pishtov?id=' + props.id)
-			console.log("data: " + JSON.stringify(data.value))
-			title   = data.value["title"]
-			img     = data.value["img"]
-			creator = data.value["creator"]
-			date    = data.value["date"]
-			stars   = data.value["stars"]
-			bgColor = data.value["color"]
-			rawMd   = data.value["md"]
-
+		data() {
 			return {
-				title  : title,
-				img    : img,
-				creator: creator,
-				date   : date,
-				stars  : stars,
-				bgColor: bgColor,
-				rawMd  : rawMd,
+				title: "",
+				img: "",
+				creator: "",
+				date: "",
+				stars: 0,
+				bgColor: '',
+				rawMd: "",
 			}
 		},
-		methods: {
-			printer(i) {
-				console.log(i)
-			},
-		},
-		mounted() {
+		async created() {
 			let svgLoader = document.createElement('script')
 			svgLoader.setAttribute('src', 'https://unpkg.com/external-svg-loader@latest/svg-loader.min.js')
 			document.head.appendChild(svgLoader)
+
+			const data = await axios.get('/api/pishtov?id=' + this.id)
+			console.log("data: " + JSON.stringify(data.data))
+
+			this.title   = data.data["title"]
+			this.img     = data.data["img"]
+			this.creator = data.data["creator"]
+			this.date    = data.data["date"]
+			this.stars   = data.data["stars"]
+			this.bgColor = data.data["color"]
+			this.rawMd   = data.data["md"]
 		},
 	}
 </script>
@@ -153,6 +144,9 @@
 		width: 100%;
 		display: flex;
 		justify-content: flex-start;
+		overflow-x: hidden;
+		overflow-y: scroll;
+		overscroll-behavior: contain;
 	}
 	.modal-content-container {
 		font-family: 'Comfortaa';

@@ -3,5 +3,12 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
+    "types": [
+      "@nuxtjs/auth-next",
+      "@nuxtjs/axios",
+      // "@types/nuxtjs__auth",
+      // "@types/node",
+      // "@nuxt/types"
+    ]
   },
 }

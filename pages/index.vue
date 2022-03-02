@@ -1,5 +1,5 @@
 <template>
-    <div class="page-container">
+    <div class="page-container" v-bind:class="{'modal-opened': modalOpened}">
         <Header />
         <div class="title-container">
             <h1 id="page-title">top 10 gaming videos</h1>
@@ -7,13 +7,13 @@
         </div>
         <div class="grid-container">
             <div class="grid">
-                <div class="block-wrapper" v-for="item in blocks" :key="item.id" @click.prevent="printer(item.id); modalId=item.id; modalOpened=true">
+                <div class="block-wrapper" v-for="item in blocks" :key="item.id" @click.prevent="printer(item.id); modalId=item.id; modalOpened=true;">
                     <PishtovBlock v-bind="item"/>
                 </div>
             </div>
         </div>
         <transition name="fade">
-            <PreviewModal v-if="modalOpened && modalId" :id="modalId" @closemodal="closeModal" />
+            <PreviewModal v-if="modalOpened && modalId" :id="modalId" @closemodal="closeModal" style="transition-duration: 0.1s; overscroll-behavior: contain;"/>
         </transition>
     </div>
 </template>
@@ -40,7 +40,7 @@ export default {
                     { id: 15, title: "Дихибридно кръстосване на маймуна с охлюв с натриев димонотрифосфат и жаба с клюн", img: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Richard_Matthew_Stallman.jpeg", creator: "joro_napikaniq", stars: 25, color: "#00c574" },
                     { id: 16, title: "Дихибридно кръстосване на маймуна с охлюв с натриев димонотрифосфат и жаба с клюн", img: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Richard_Matthew_Stallman.jpeg", creator: "joro_napikaniq", stars: 25, color: "#00c574" },
             ],
-            modalOpened: true,
+            modalOpened: false,
             modalId: 1
         }
     },
@@ -70,10 +70,13 @@ body {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.2s ease;
+    transition: opacity 0.1s ease;
 }
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
+}
+.modal-opened {
+    overflow: hidden;
 }
 .page-container {
     min-height: 100vh;

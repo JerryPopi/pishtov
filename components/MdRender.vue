@@ -23,3 +23,9 @@
 	import { marked } from 'marked'
 	import xss from 'xss'
 </script>
+
+<style scoped>
+	.md-render a {
+		color: #00c574;
+	}
+</style>
