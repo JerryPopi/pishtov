@@ -20,13 +20,19 @@
 						<svg id="footerTimestampSvg" data-src="https://s2.svgbox.net/hero-outline.svg?ic=clock"></svg>
 						<p id="footerTimestamp">{{ date }}</p>
 					</div>
-					<div class="modal-external-container">
-						// TODO - Add external link & Back and Forward buttons
-						<!-- <nuxt-link class="nuxt-link" :to="'/pishtov/' + id">
+					<div class="modal-navigation">
+						<!-- // TODO - Add external link & Back and Forward buttons -->
+						<div class="previous-modal-button" @click="this.$emit('previousmodal')">
+							<div class="modal-openexternal">&lt;---</div>
+						</div>
+						<nuxt-link class="nuxt-link" :to="'/pishtov/' + id">
 							<div class="modal-openexternal">
 								<p id="openexternalButton">Open external</p>
 							</div>
-						</nuxt-link> -->
+						</nuxt-link>
+						<div class="next-modal-button">
+							<div class="modal-openexternal" @click="this.$emit('nextmodal')">---></div>
+						</div>
 					</div>
 					<div class="modal-creator-container">
 						<svg id="footerCreatorSvg" data-src="https://s2.svgbox.net/materialui.svg?ic=person"></svg>
@@ -160,6 +166,7 @@
 		margin-right: 15px;
 		font-family: 'Comfortaa';
 		display: flex;
+		justify-content: space-between;
 	}
 	.modal-timestamp-container {
 		display: flex;
@@ -176,16 +183,28 @@
 		margin: 0 0;
 		font-size: 20px;
 	}
-	.modal-external-container {
-		width: 100%;
+	.modal-navigation {
+		width: 50%;
 		display: flex;
-		justify-content: center;
+		justify-content: space-around;
 		align-items: center;
+	}
+	.previous-modal-button {
+		width: 30%;
+		height: 90%;
+		text-decoration: none;
+		cursor: pointer;
 	}
 	.nuxt-link {
 		width: 50%;
 		height: 90%;
 		text-decoration: none;
+	}
+	.next-modal-button {
+		width: 30%;
+		height: 90%;
+		text-decoration: none;
+		cursor: pointer;
 	}
 	.modal-openexternal {
 		width: 100%;

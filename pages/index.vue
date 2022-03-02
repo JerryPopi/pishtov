@@ -7,13 +7,13 @@
         </div>
         <div class="grid-container">
             <div class="grid">
-                <div class="block-wrapper" v-for="item in blocks" :key="item.id" @click.prevent="printer(item.id); modalId=item.id; modalOpened=true;">
+                <div class="block-wrapper" v-for="item in blocks" :key="item.id" @click.prevent="openModal(item.id)">
                     <PishtovBlock v-bind="item"/>
                 </div>
             </div>
         </div>
         <transition name="fade">
-            <PreviewModal v-if="modalOpened && modalId" :id="modalId" @closemodal="closeModal" style="transition-duration: 0.1s; overscroll-behavior: contain;"/>
+            <PreviewModal :key="modalId" v-if="modalOpened && modalId" :id="modalId" @closemodal="closeModal" @previousmodal="prevModal" @nextmodal="nextModal" style="transition-duration: 0.1s; overscroll-behavior: contain;"/>
         </transition>
     </div>
 </template>
@@ -48,9 +48,28 @@ export default {
         printer(i){
             console.log(i)
         },
+        openModal(id){
+            this.printer(id);
+            this.modalOpened = true;
+            this.modalId = id;
+        },
         closeModal(){
             this.modalOpened = false
             this.modalId = 0
+        },
+        prevModal(){
+            if(this.modalId == 1){
+                this.modalId = this.blocks.length
+            }else{
+                this.modalId--
+            }
+        },
+        nextModal(){
+            if(this.modalId == this.blocks.length){
+                this.modalId = 1
+            }else{
+                this.modalId++
+            }
         }
     }
 }

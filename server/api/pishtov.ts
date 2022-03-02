@@ -4,8 +4,9 @@ import { readFileSync } from 'fs';
 
 export default (req: IncomingMessage, res: ServerResponse) => {
 	const id = useQuery(req).id.toString();
-	console.log("id: " + JSON.stringify(id));
+    // console.log("🚀 ~ file: pishtov.ts ~ line 7 ~ id", id)
 	if (id) {
+		// TODO tuka bi trqlo da zima ot databasata
 		return {
 			id: 1,
 			title: 'Pishtov 1',
@@ -23,7 +24,6 @@ export default (req: IncomingMessage, res: ServerResponse) => {
 
 function getPishtov(id: string) {
 	try {
-		console.log(id[1])
 		let fileContent =  readFileSync(`server/api/pishtovs/${id}.md`, 'utf8');
 		return fileContent;	
 	} catch (e) {
